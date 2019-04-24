@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Similarity Detection</title>
+    <!-- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/meyer-reset/2.0/reset.min.css"> -->
+
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style.css')}}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+
+    <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Roboto:400,700'>
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css'>
+
+    <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='style2.css')}}">
+    <link rel="stylesheet" href="static/style.css">
+    <link rel="stylesheet" href="static/style2.css">
+
+
+</head>
+
+<body>
+
+<h1 align="center" style="color:#20df80">Similarity Detection</h1><br>
+<!--   <h4>Select method&hellip;</h3>
+-->
+<form method="POST" id="formcalc">
+
+    <section id="inp">
+        <div>
+            <input type="radio" name="algo" id="control_01" value="LCStr" required/>
+            <label for="control_01">
+                <h5>Longest Common SubString</h5>
+            </label>
+        </div>
+        <div>
+            <input type="radio" name="algo" id="control_02" value="LCSeq">
+            <label for="control_02">
+                <h5>Longest Common SubSequence</h5>
+            </label>
+        </div>
+        <div>
+            <input type="radio" name="algo" id="control_03" value="Jaro">
+            <label for="control_03">
+                <h5>Jaro Similarity</h5>
+            </label>
+        </div>
+        <div>
+            <input type="radio" name="algo" id="control_04" value="Jaro–Winkler">
+            <label for="control_04">
+                <h5>Jaro/Winkler Similarity</h5>
+            </label>
+        </div>
+        <div>
+            <input type="radio" name="algo" id="control_10" value="nn">
+            <label for="control_10">
+                <h3>Neural Network</h3>
+            </label>
+        </div>
+        <div>
+            <input type="radio" name="algo" id="control_09" value="Levenshtein">
+            <label for="control_09">
+                <h5>Levenshtein Ratio</h5>
+            </label>
+        </div>
+        <div>
+            <input type="radio" name="algo" id="control_06" value="Damerau-Levenshtein">
+            <label for="control_06">
+                <h5>Damerau-Levenshtein</h5>
+            </label>
+        </div>
+        <div>
+            <input type="radio" name="algo" id="control_07" value="Ratcliff/Obershelp">
+            <label for="control_07">
+                <h5>Ratcliff/ Obershelp Similarity</h5>
+            </label>
+        </div>
+        <div>
+            <input type="radio" name="algo" id="control_08" value="Fuzzy">
+            <label for="control_08">
+                <h5>Token set ratio</h5>
+            </label>
+        </div>
+    </section>
+    <!--<section>-->
+     <!--<span style="width: 14%;float: left;">-->
+
+        <!--<div class="flex-wrapper">-->
+          <!--<div class="single-chart">-->
+            <!--<svg viewBox="0 0 36 36" class="circular-chart green">-->
+              <!--<path class="circle-bg"-->
+                    <!--d="M18 2.0845-->
+                  <!--a 15.9155 15.9155 0 0 1 0 31.831-->
+                  <!--a 15.9155 15.9155 0 0 1 0 -31.831"-->
+              <!--/>-->
+
+              <!--<path class="circle"-->
+                    <!--stroke-dasharray="30, 100"-->
+                    <!--d="M18 2.0845-->
+                  <!--a 15.9155 15.9155 0 0 1 0 31.831-->
+                  <!--a 15.9155 15.9155 0 0 1 0 -31.831"-->
+              <!--/>-->
+              <!--<text x="18" y="20.35" class="percentage">Check</text>-->
+
+            <!--</svg>-->
+          <!--</div>-->
+       <!--</div>-->
+     <!--</span>-->
+    <!--</section>-->
+    <section>
+        <div>
+            <textarea style="float: left;" rows="15" cols="80" name="text_a" placeholder="First text goes here..." required></textarea>
+            <!--<span style="width: 14%;float: left; " id=result align="center"  ></span>-->
+            <div style="width: 14%;float: left;">
+                                            <br><br><br>
+                <img id="gif" style="width: 100%;" align="center" src="https://jsopakistan.org/images/loaderevent.gif" >
+
+               <div class="flex-wrapper">
+
+                  <div class="single-chart">
+                    <svg viewBox="0 0 36 36" class="circular-chart green">
+                      <path class="circle-bg"
+                            d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+
+                      <path class="circle"
+                            stroke-dasharray="30, 100"
+                            d="M18 2.0845
+                          a 15.9155 15.9155 0 0 1 0 31.831
+                          a 15.9155 15.9155 0 0 1 0 -31.831"
+                      />
+                      <text x="18" y="20.35" class="percentage">Check</text>
+                      <svg id="green_check" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                          <polyline class="path check" fill="none" stroke="#73AF55" stroke-width="6" stroke-linecap="round"
+                            stroke-miterlimit="10" points="100.2,40.2 51.5,88.8 29.8,67.5 "/>
+                      </svg>
+                      <svg id="red_cross" version="1.1" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 130.2 130.2">
+                        <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10"
+                             x1="34.4" y1="37.9" x2="95.8" y2="92.3"/>
+                        <line class="path line" fill="none" stroke="#D06079" stroke-width="6" stroke-linecap="round" stroke-miterlimit="10"
+                            x1="95.8" y1="38" x2="34.4" y2="92.2"/>
+                      </svg>
+                    </svg>
+                  </div>
+               </div>
+                <h3  id = "nn_text" style=" text-align: center;">Similar</h3>
+            </div>
+            <textarea style="float: right;" rows="15" cols="80" name="text_b" placeholder="Second text goes here..." required></textarea><br>
+        </div>
+
+    </section>
+    <input type="submit" id="calculate" value="Submit"><br><br><br><br><br>
+</form>
+<!--<input type="submit" id="cancel"  onclick="remove()" value="Cancel">-->
+
+<!--<a id="calculate" onclick="document.getElementById('formcalc').submit();">Submit</a>-->
+
+<script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
+
+
+<script type=text/javascript>
+        $(".flex-wrapper").hide();
+        $('#green_check').hide();
+        $('#red_cross').hide();
+        $('.percentage').hide();
+        $('#nn_text').hide();
+        $('#gif').hide();
+        $('#cancel').hide();
+        function addSubmit(ev) {
+           $(".flex-wrapper").hide();
+           $('#green_check').hide();
+           $('#gif').show();
+           $('#red_cross').hide();
+           $('.percentage').hide();
+           $('#nn_text').hide();
+           $('path.circle').attr('stroke-dasharray','0,100');
+           <!--$(".flex-wrapper").show();-->
+          ev.preventDefault();
+          $.ajax({
+            method: 'POST',
+            url: {{ url_for('calculate')|tojson }},
+            data: $(this).serialize()
+          }).done(addShow);
+        }
+
+        function addShow(data) {
+          if(data.algo=='nn'){
+            $('path.circle').attr('stroke-dasharray',data.result+',100');
+            if(data.result=='s'){
+                $('#nn_text').text('Similar');
+                $('#nn_text').attr('style','text-align: center; color:#FF0000');
+                $('svg.circular-chart ').attr('class','circular-chart red');
+                $('#red_cross').show();
+             }
+            if(data.result=='ns'){
+                $('#nn_text').text('Not Similar');
+                $('#nn_text').attr('style','text-align: center; color:#4CC790');
+                $('svg.circular-chart ').attr('class','circular-chart green');
+                $('#green_check').show();
+             }
+             $('#nn_text').show();
+          }
+          else{
+             $('.percentage').text(data.result+'%');
+             $('path.circle').attr('stroke-dasharray',data.result+',100');
+              if(data.result<50){
+                $('svg.circular-chart ').attr('class','circular-chart green');
+              }
+              else if(data.result<70 && data.result>50){
+                $('svg.circular-chart ').attr('class','circular-chart orange');
+              }
+              else if(data.result>70){
+                $('svg.circular-chart ').attr('class','circular-chart red');
+              }
+              $('.percentage').show();
+          }
+          $('#gif').hide();
+          $(".flex-wrapper").show();
+          $('#cancel').show();
+        }
+        var form = document.getElementById('formcalc');
+        form.addEventListener('submit', addSubmit);
+        $("a").click(function(event){
+            event.preventDefault();
+        });
+        function remove() {
+            $(".flex-wrapper").hide();
+            $('#green_check').hide();
+            $('#red_cross').hide();
+            $('.percentage').hide();
+            $('#nn_text').hide();
+            $('#gif').hide();
+            var radios = document.getElementsByName('algo');
+            for( i = 0; i < radios.length; i++ ) {
+                if( radios[i].checked ) {
+                    return radios[i].value;
+                }
+            }
+            $('#cancel').hide();
+
+
+         }
+
+
+</script>
+</body>
+</html>
